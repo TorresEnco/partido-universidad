@@ -56,8 +56,8 @@ export default function RepresentativesCarousel() {
   };
 
   return (
-    <section id="equipo" className="border-t border-border/40 bg-muted/20">
-      <div className="mx-auto max-w-7xl px-4 pt-4 pb-4 sm:pt-10 sm:pb-8 sm:px-6 lg:px-8">
+    <section id="equipo" className="relative overflow-hidden border-t border-border/40 bg-gradient-to-b from-sky-50/60 via-teal-50/20 to-sky-50/40 dark:from-zinc-950/20 dark:via-zinc-950/40 dark:to-zinc-950/20">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 pt-4 pb-4 sm:pt-10 sm:pb-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
             La fórmula del cambio
@@ -72,8 +72,7 @@ export default function RepresentativesCarousel() {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Responsive offset variable: larger separation on wider screens */}
-          <div className="relative mx-auto h-[420px] max-w-[810px] xs:h-[440px] sm:h-[540px] sm:max-w-[900px] lg:h-[580px] lg:max-w-[990px] xl:max-w-[1200px] [--side-offset:42%] sm:[--side-offset:60%] md:[--side-offset:80%] lg:[--side-offset:105%] xl:[--side-offset:130%]">
+          {/* Responsive offset variable: larger separation on wider screens */}          <div className="relative mx-auto h-[420px] max-w-[810px] xs:h-[440px] sm:h-[540px] sm:max-w-[900px] lg:h-[580px] lg:max-w-[990px] xl:max-w-[1200px] [--side-offset:46%] sm:[--side-offset:67%] md:[--side-offset:87%] lg:[--side-offset:113%] xl:[--side-offset:133%]">
             {representatives.map((rep, i) => {
               const styles = getCardStyles(i);
               const isCenter = ((i - currentIndex) % 3 + 3) % 3 === 0;
@@ -85,28 +84,35 @@ export default function RepresentativesCarousel() {
                   className="absolute top-1/2 left-1/2 -ml-[89px] w-[178px] cursor-pointer text-left focus-visible:outline-none transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] sm:-ml-[117px] sm:w-[234px] md:-ml-[130px] md:w-[261px] lg:-ml-[144px] lg:w-[288px] xl:-ml-[157px] xl:w-[315px]"
                   style={styles}
                 >
-                  <div className="group overflow-hidden rounded-2xl border border-border/40 bg-card shadow-lg transition-shadow duration-500 hover:shadow-xl hover:shadow-primary/5">
-                    <div className="aspect-[3/4] overflow-hidden bg-muted">
-                      <img
-                        src={rep.photo}
-                        alt={rep.name}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <span className="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-medium text-primary">
-                        {rep.badge}
-                      </span>
-                      <h3 className="mt-2 font-heading text-base font-semibold">
+                  <div className="group relative flex flex-col justify-end aspect-[3/4.4] w-full overflow-hidden rounded-[2rem] border-2 border-white/90 shadow-[0_15px_35px_rgba(0,0,0,0.06)] dark:border-zinc-800 transition-shadow duration-500 hover:shadow-[0_20px_45px_rgba(0,0,0,0.12)]">
+                    {/* Background image */}
+                    <img
+                      src={rep.photo}
+                      alt={rep.name}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 -z-20 brightness-[1.08] contrast-[1.01]"
+                    />
+
+                    {/* Dark gradient overlay (lighter at the top, darker at the bottom) */}
+                    <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+
+                    {/* Text container with a subtle lens blur and no hard borders */}
+                    <div className="relative z-10 w-full p-4 pb-5 sm:p-5 sm:pb-6 text-left backdrop-blur-[2px]">
+                      <h3 className="font-heading text-sm font-bold tracking-tight text-white sm:text-base md:text-lg lg:text-xl text-left">
                         {rep.shortName}
                       </h3>
-                      <p className="mt-1 text-xs text-muted-foreground/60">
-                        {rep.career}
+
+                      {/* Línea de acento azul */}
+                      <div className="mt-2 h-[3px] w-7 rounded-full bg-blue-500" />
+
+                      {/* Cargo / Rol */}
+                      <p className="mt-2.5 text-[10px] font-semibold leading-normal text-zinc-200 sm:text-xs md:text-sm">
+                        {rep.badge}
                       </p>
+
                       {isCenter && (
-                        <div className="mt-3 flex items-center gap-1.5 text-xs font-medium text-primary transition-opacity">
+                        <div className="mt-3 flex items-center gap-1 text-[10px] font-bold text-blue-300 sm:text-xs">
                           <span>Ver perfil</span>
-                          <ChevronRight className="h-3.5 w-3.5" />
+                          <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                         </div>
                       )}
                     </div>
